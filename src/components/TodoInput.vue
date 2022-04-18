@@ -39,7 +39,9 @@ export default {
     addTodo() {
       // 입력하는 값이 있을때만 실행
       if (this.newTodoItem !== "") {
-        this.$emit("addTodoItem", this.newTodoItem);
+        // this.$emit("addTodoItem", this.newTodoItem);
+        // const text = this.newTodoItem.trim();
+        this.$store.commit('addOneItem',this.newTodoItem);
         this.clearInput();
       } else {
         this.showModal = !this.showModal;

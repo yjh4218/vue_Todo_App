@@ -5,7 +5,7 @@
     <transition-group name="list" tag="ul">
       <!-- v-for 반복문 사용시 데이터 저장하는 공간과 index를 설정할 수 있다. 이로 인해 지정한 데이터를 삭제할 수 있다. -->
       <li
-        v-for="(todoItem, index) in propsdata"
+        v-for="(todoItem, index) in this.$store.state.todoItems"
         v-bind:key="todoItem.item"
         class="shadow"
       >
@@ -30,13 +30,14 @@
 
 <script>
 export default {
-  props: ["propsdata"],
   methods: {
     removeTodo(todoItem, index) {
-      this.$emit("removeItem", todoItem, index);
+      // this.$emit("removeItem", todoItem, index);
+      this.$store.commit('removeOneItem', {todoItem, index});
     },
     toggleComplete(todoItem, index) {
-      this.$emit("toggleItem", todoItem, index);
+      // this.$emit("toggleItem", todoItem, index);
+      this.$store.commit("toggleOneItem", {todoItem, index});
     },
   },
 };
