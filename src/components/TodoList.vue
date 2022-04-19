@@ -5,7 +5,7 @@
     <transition-group name="list" tag="ul">
       <!-- v-for 반복문 사용시 데이터 저장하는 공간과 index를 설정할 수 있다. 이로 인해 지정한 데이터를 삭제할 수 있다. -->
       <li
-        v-for="(todoItem, index) in this.$store.state.todoItems"
+        v-for="(todoItem, index) in this.storedTodoItems"
         v-bind:key="todoItem.item"
         class="shadow"
       >
@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import { mapGetters} from 'vuex'
+
 export default {
   methods: {
     removeTodo(todoItem, index) {
@@ -40,6 +42,12 @@ export default {
       this.$store.commit("toggleOneItem", {todoItem, index});
     },
   },
+  computed:{
+    // todoItems(){
+    //   return this.$store.getters.storedTodoItems
+    // }
+    ...mapGetters(['storedTodoItems'])
+  }
 };
 </script>
 
