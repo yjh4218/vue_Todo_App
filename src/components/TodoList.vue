@@ -13,14 +13,14 @@
           <i
             class="fa-solid fa-check"
             v-bind:class="{ checkBtnCompleted: todoItem.completed }"
-            v-on:click="toggleComplete(todoItem, index)"
+            v-on:click="toggleComplete({ todoItem, index })"
           ></i>
         </span>
         <!-- todoItem의 completed의 값에 따라 체크 실행됨(줄 긋기) 즉, 조건에 따라 실행될 수 있게 함-->
         <span v-bind:class="{ textCompleted: todoItem.completed }">
           {{ todoItem.item }}
         </span>
-        <span class="removeBtn" v-on:click="removeTodo(todoItem, index)">
+        <span class="removeBtn" v-on:click="removeTodo({ todoItem, index })">
           <i class="fa-solid fa-trash-can"></i>
         </span>
       </li>
@@ -29,25 +29,30 @@
 </template>
 
 <script>
-import { mapGetters} from 'vuex'
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   methods: {
-    removeTodo(todoItem, index) {
-      // this.$emit("removeItem", todoItem, index);
-      this.$store.commit('removeOneItem', {todoItem, index});
-    },
-    toggleComplete(todoItem, index) {
-      // this.$emit("toggleItem", todoItem, index);
-      this.$store.commit("toggleOneItem", {todoItem, index});
-    },
+    ...mapMutations({
+      removeTodo: "removeOneItem",
+      toggleComplete: "toggleOneItem",
+    }),
+    // removeTodo(todoItem, index) {
+    //   // this.$emit("removeItem", todoItem, index);
+    //   this.$store.commit('removeOneItem', {todoItem, index});
+    // },
+
+    // toggleComplete(todoItem, index) {
+    //   // this.$emit("toggleItem", todoItem, index);
+    //   this.$store.commit("toggleOneItem", { todoItem, index });
+    // },
   },
-  computed:{
+  computed: {
     // todoItems(){
     //   return this.$store.getters.storedTodoItems
     // }
-    ...mapGetters(['storedTodoItems'])
-  }
+    ...mapGetters(["storedTodoItems"]),
+  },
 };
 </script>
 
